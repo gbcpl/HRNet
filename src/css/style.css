@@ -1,0 +1,51 @@
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+form {
+  display: flex;
+  margin-top: 0em;
+  flex-direction: column;  
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+  margin-bottom: 10px;
+}
+
+.address {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;  
+  margin-inline-start: 2px;
+  margin-inline-end: 2px;
+  padding-block-start: 0.35em;
+  padding-inline-start: 0.75em;
+  padding-inline-end: 0.75em;
+  padding-block-end: 0.625em;
+  min-inline-size: min-content;
+  border-width: 2px;
+  border-style: groove;
+  border-color: rgb(192, 192, 192);
+  border-image: initial;
+}
+
+#save {
+  margin: 20px;
+}
+
+.dropdown-menu {
+  max-height: 300px;
+  overflow-x: scroll;
+}
