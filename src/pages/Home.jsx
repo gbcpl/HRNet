@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom"
 import Form from "../components/Form"
 
 function Home() {
@@ -7,7 +8,7 @@ function Home() {
         <h1>HRnet</h1>
       </div>
       <div className="container">
-        <a href="employee-list.html">View Current Employees</a>
+        <Link to="/employees" relative="path">View Current Employees</Link>
         <h2>Create Employee</h2>
         <Form />
       </div>
@@ -15,4 +16,4 @@ function Home() {
   )
 }
 
-export default Home
+export default Home 

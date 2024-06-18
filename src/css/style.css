@@ -4,7 +4,6 @@
   justify-content: center;
 }
 
-
 .container {
   display: flex;
   flex-direction: column;
@@ -48,4 +47,33 @@ label {
 .dropdown-menu {
   max-height: 300px;
   overflow-x: scroll;
+}
+
+.datePicker {
+  color: red !important;
+}
+
+.form {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: row;
+  gap: 100px;
+}
+
+.employee-infos {
+  display: flex;
+  flex-direction: column;
+}
+
+.department {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+input {
+  width: 100%;
 }

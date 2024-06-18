@@ -1,94 +1,106 @@
-import Dropdown from 'react-bootstrap/Dropdown';
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
-import states from '../datas/states.js'
-import { useState } from 'react';
+import states from '../datas/states.js';
+import { useContext, useState } from 'react';
+import dayjs from 'dayjs';
+import Calendar from './Calendar.jsx';
+import { Input, FormControl, Select, MenuItem } from '@mui/material';
+import { EmployeesContext } from '../context/EmployeesContext'; // Importer le contexte
+import SaveModal from './SaveModal.jsx';
 
 function Form() {
+  const { saveEmployee } = useContext(EmployeesContext); // Utiliser le contexte
   const [selectedState, setSelectedState] = useState(states[0].name);
-  const [department, setDepartment] = useState("Sales")
-
-  function saveEmployee() {
+  const [department, setDepartment] = useState("Sales");
+  const [dateOfBirth, setDateOfBirth] = useState(dayjs());
+  const [startDate, setStartDate] = useState(dayjs());
+  const [openSaveModal, setOpenSaveModal] = useState(false); 
+  
+  function handleSaveEmployee (e) {
+    e.preventDefault(); 
     const firstName = document.getElementById('first-name');
     const lastName = document.getElementById('last-name');
-    const dateOfBirth = document.getElementById('date-of-birth');
-    const startDate = document.getElementById('start-date');
     const street = document.getElementById('street');
     const city = document.getElementById('city');
     const zipCode = document.getElementById('zip-code');
 
-    const employees = JSON.parse(localStorage.getItem('employees')) || [];
+    if (!firstName.value || !lastName.value || !street.value || !city.value || !zipCode.value) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
     const employee = {
         firstName: firstName.value,
         lastName: lastName.value,
-        dateOfBirth: dateOfBirth.value,
-        startDate: startDate.value,
+        dateOfBirth: dateOfBirth.format('DD-MM-YYYY'),
+        startDate: startDate.format('DD-MM-YYYY'),
         department: department,
         street: street.value,
         city: city.value,
         state: selectedState,
         zipCode: zipCode.value
     };
-    employees.push(employee);
-    localStorage.setItem('employees', JSON.stringify(employees));
-    console.log(employees);
+    saveEmployee(employee);
+    setOpenSaveModal(true);
   }
 
   return (
     <>
       <form action="#" id="create-employee">
-        <label htmlFor="first-name">First Name</label>
-        <input type="text" id="first-name" />
-
-        <label htmlFor="last-name">Last Name</label>
-        <input type="text" id="last-name" />
-
-        <label htmlFor="date-of-birth">Date of Birth</label>
-        <input id="date-of-birth" type="text" />
-
-        <label htmlFor="start-date">Start Date</label>
-        <input id="start-date" type="text" />
-
-        <fieldset className="address">
+        <div className="form">
+          <div className="employee-infos">
+            <label htmlFor="first-name">First Name</label>
+            <Input id="first-name" className='inputs' required />
+            <label htmlFor="last-name">Last Name</label>
+            <Input id="last-name" className='inputs' required />
+            <label htmlFor="date-of-birth">Date of Birth</label>
+            <Calendar id="date-of-birth" value={dateOfBirth} onChange={setDateOfBirth} />
+            <label htmlFor="start-date">Start Date</label>
+            <Calendar id="start-date" value={startDate} onChange={setStartDate} />
+          </div>
+          <fieldset className="address">
             <legend>Address</legend>
-
             <label htmlFor="street">Street</label>
-            <input id="street" type="text" />
-
+            <Input id="street" type="text" />
             <label htmlFor="city">City</label>
-            <input id="city" type="text" />
-
+            <Input id="city" type="text" />
             <label htmlFor="state">State</label>
-            <Dropdown as={ButtonGroup} onSelect={(e) => setSelectedState(e)}>
-              <Button variant="success">{selectedState}</Button>
-              <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-              <Dropdown.Menu className="dropdown-menu" id="state">
+            <FormControl fullWidth>
+              <Select
+                labelId="state-label"
+                id="state"
+                value={selectedState}
+                onChange={(e) => setSelectedState(e.target.value)}
+              >
                 {states.map((state, index) => (
-                  <Dropdown.Item eventKey={state.name} key={index}>{state.name}</Dropdown.Item>
+                  <MenuItem value={state.name} key={index}>{state.name}</MenuItem>
                 ))}
-              </Dropdown.Menu>
-            </Dropdown>
+              </Select>
+            </FormControl>
             <label htmlFor="zip-code">Zip Code</label>
-            <input id="zip-code" type="number" />
-        </fieldset>
-        <label htmlFor="department">Department</label>
-        <Dropdown as={ButtonGroup} onSelect={(e) => setDepartment(e)}>
-          <Button variant="success">{department}</Button>
-  
-          <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-          
-          <Dropdown.Menu id="department">
-            <Dropdown.Item eventKey="Sales" href="#/action-1">Sales</Dropdown.Item>
-            <Dropdown.Item eventKey="Marketing" href="#/action-2">Marketing</Dropdown.Item>
-            <Dropdown.Item eventKey="Engineering" href="#/action-3">Engineering</Dropdown.Item>
-            <Dropdown.Item eventKey="Human Resources" href="#/action-4">Human Resources</Dropdown.Item>
-            <Dropdown.Item eventKey="Legal" href="#/action-5">Legal</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
+            <Input id="zip-code" type="number" />
+          </fieldset>
+        </div>
+        <div className="department">
+          <label htmlFor="department">Department</label>
+          <FormControl fullWidth>
+            <Select
+              labelId="department-label"
+              id="department"
+              value={department}
+              onChange={(e) => setDepartment(e.target.value)}
+            >
+              <MenuItem value="Sales">Sales</MenuItem>
+              <MenuItem value="Marketing">Marketing</MenuItem>
+              <MenuItem value="Engineering">Engineering</MenuItem>
+              <MenuItem value="Human Resources">Human Resources</MenuItem>
+              <MenuItem value="Legal">Legal</MenuItem>
+            </Select>
+          </FormControl>
+        </div>
       </form>
-      <button id="save" onClick={saveEmployee}>Save</button>
+      <button id="save" onClick={handleSaveEmployee}>Save</button>
+      <SaveModal open={openSaveModal} onClose={() => setOpenSaveModal(false)} />
     </>
-  )
+  );
 }
 
-export default Form
+export default Form;
