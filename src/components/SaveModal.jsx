@@ -32,14 +32,14 @@ function SaveModal({ open, onClose }) {
         },
       }}
     >
-    <Fade in={open}>
-      <Box sx={style}>
-        <Typography id="transition-modal-title" variant="h6" component="h2">
-          Employee created!
-        </Typography>
-      </Box>
-    </Fade>
-  </Modal>
+      <Fade in={open}>
+        <Box sx={style}>
+          <Typography id="transition-modal-title" variant="h6" component="h2">
+            Employee created!
+          </Typography>
+        </Box>
+      </Fade>
+    </Modal>
   )
 }
 

@@ -3,16 +3,17 @@ import { useContext, useState } from 'react';
 import dayjs from 'dayjs';
 import Calendar from './Calendar.jsx';
 import { Input, FormControl, Select, MenuItem } from '@mui/material';
-import { EmployeesContext } from '../context/EmployeesContext'; // Importer le contexte
+import { EmployeesContext } from '../context/EmployeesContext'; 
 import SaveModal from './SaveModal.jsx';
 
 function Form() {
-  const { saveEmployee } = useContext(EmployeesContext); // Utiliser le contexte
+  const { saveEmployee } = useContext(EmployeesContext); 
   const [selectedState, setSelectedState] = useState(states[0].name);
   const [department, setDepartment] = useState("Sales");
   const [dateOfBirth, setDateOfBirth] = useState(dayjs());
   const [startDate, setStartDate] = useState(dayjs());
   const [openSaveModal, setOpenSaveModal] = useState(false); 
+  const [errorMessage, setErrorMessage] = useState("");
   
   function handleSaveEmployee (e) {
     e.preventDefault(); 
@@ -23,7 +24,7 @@ function Form() {
     const zipCode = document.getElementById('zip-code');
 
     if (!firstName.value || !lastName.value || !street.value || !city.value || !zipCode.value) {
-      alert("Please fill in all required fields.");
+      setErrorMessage("Please fill in all informations about the employee.");
       return;
     }
 
@@ -40,6 +41,7 @@ function Form() {
     };
     saveEmployee(employee);
     setOpenSaveModal(true);
+    setErrorMessage("");
   }
 
   return (
@@ -48,9 +50,9 @@ function Form() {
         <div className="form">
           <div className="employee-infos">
             <label htmlFor="first-name">First Name</label>
-            <Input id="first-name" className='inputs' required />
+            <Input id="first-name" className='inputs' />
             <label htmlFor="last-name">Last Name</label>
-            <Input id="last-name" className='inputs' required />
+            <Input id="last-name" className='inputs' />
             <label htmlFor="date-of-birth">Date of Birth</label>
             <Calendar id="date-of-birth" value={dateOfBirth} onChange={setDateOfBirth} />
             <label htmlFor="start-date">Start Date</label>
@@ -97,6 +99,7 @@ function Form() {
           </FormControl>
         </div>
       </form>
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
       <button id="save" onClick={handleSaveEmployee}>Save</button>
       <SaveModal open={openSaveModal} onClose={() => setOpenSaveModal(false)} />
     </>
