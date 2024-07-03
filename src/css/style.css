@@ -81,3 +81,7 @@ input {
 .titles {
   cursor: pointer;
 }
+
+.error-message {
+  color: red;
+}

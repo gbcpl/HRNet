@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Home from '../pages/Home';
-import Employees from '../pages/Employees';
+import Home from '../components/pages/Home';
+import Employees from '../components/pages/Employees';
 
 function Router() {
   return (

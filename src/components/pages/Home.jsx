@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import Form from "../components/Form"
+import Form from "../organisms/Form"
 
 function Home() {
   return (
