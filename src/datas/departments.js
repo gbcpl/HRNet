@@ -2,7 +2,7 @@ const departments = [
   "Sales",
   "Marketing",
   "Engineering",
-  "Humain Resources",
+  "Human Resources",
   "Legal"
 ]
 

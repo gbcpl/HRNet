@@ -4,12 +4,13 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { Controller } from 'react-hook-form';
 import { TextField } from '@mui/material';
+import Labels from '../atoms/Labels';
 
 
 export default function Calendar({ name, control, id, htmlFor, title, errors }) {
   return (
     <div>
-      <label htmlFor={htmlFor}>{title}</label>
+      <Labels htmlFor={htmlFor} title={title} />
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['DateTimePicker']}>
           <Controller

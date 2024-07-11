@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { schema } from '../validation.js'
 import states from '../../datas/states.js';
 import departments from '../../datas/departments.js'
 import { useContext, useState } from 'react';
@@ -9,30 +9,19 @@ import Calendar from '../molecules/Calendar.jsx';
 import { EmployeesContext } from '../../context/EmployeesContext.jsx'; 
 import SaveModal from '../molecules/SaveModal.jsx';
 import FormField from '../molecules/FormField.jsx';
-import SelectInputs from '../atoms/SelectInputs.jsx';
-
-const schema = yup.object().shape({
-  firstName: yup.string().required('First Name is required'),
-  lastName: yup.string().required('Last Name is required'),
-  street: yup.string().required('Street is required'),
-  city: yup.string().required('City is required'),
-  zipCode: yup.string().required('Zip Code is required'),
-  dateOfBirth: yup.date().nullable().required('Date of Birth is required').typeError('Invalid date format'),
-  startDate: yup.date().nullable().required('Start Date is required').typeError('Invalid date format')
-});
-
-// validation.js => schema pour alléger
+import SelectInputs from '../molecules/SelectInputs.jsx';
 
 function Form() {
   const { saveEmployee } = useContext(EmployeesContext);
   const { handleSubmit, control, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
+    defaultValues: {state: "State", department: "Department"}
   });
 
-  const [selectedState, setSelectedState] = useState(states[0].name);
-  const [department, setDepartment] = useState(departments[0]);
+  const [selectedState, setSelectedState] = useState("State");
+  const [department, setDepartment] = useState("Department");
   const [openSaveModal, setOpenSaveModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = (data) => {
     const employee = {
@@ -48,7 +37,7 @@ function Form() {
     };
     saveEmployee(employee);
     setOpenSaveModal(true);
-    setErrorMessage("");
+    setErrorMessage('');
   };
 
   return (
@@ -65,12 +54,34 @@ function Form() {
             <legend>Address</legend>
             <FormField id="street" name="street" label="Street" control={control} errors={errors}></FormField>
             <FormField id="city" name="city" label="City" control={control} errors={errors}></FormField>
-            <SelectInputs id="state" value={selectedState} setter={setSelectedState} data={states} singleData={(item) => item.name} htmlFor="state" title="State"/>
+            <SelectInputs
+              id="state"
+              name="state"
+              value={selectedState}
+              setter={setSelectedState}
+              control={control}
+              data={states}
+              singleData={(item) => item.name}
+              htmlFor="state"
+              title="State" 
+              errors={errors}
+            />
             <FormField id="zip-code" name="zipCode" label="Zip Code" control={control} errors={errors}></FormField>
           </fieldset>
         </div>
         <div className="department">
-          <SelectInputs id="department" value={department} setter={setDepartment} data={departments} singleData={(item) => item} htmlFor="department" title="Department"/>
+          <SelectInputs
+            id="department"
+            name="department"
+            value={department}
+            setter={setDepartment}
+            control={control}
+            data={departments}
+            singleData={(item) => item}
+            htmlFor="department"
+            title="Department"
+            errors={errors}
+          />
         </div>
         <button id="save" type="submit">Save</button>
       </form>
