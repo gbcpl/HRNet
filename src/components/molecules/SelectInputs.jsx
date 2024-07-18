@@ -1,6 +1,7 @@
 import { MenuItem, Select, FormControl } from "@mui/material"
 import Labels from "../atoms/Labels"
 import { Controller } from "react-hook-form"
+import PropTypes from "prop-types";
 
 const SelectInputs = ({ id, name, setter, data, singleData, htmlFor, title, control, errors }) => {
   return (
@@ -42,6 +43,18 @@ const SelectInputs = ({ id, name, setter, data, singleData, htmlFor, title, cont
       {errors[name] && <p className="error-message">{errors[name].message}</p>} 
     </div>
   );
+};
+
+SelectInputs.propTypes = {
+  id: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  setter: PropTypes.func.isRequired,
+  data: PropTypes.arrayOf(PropTypes.any).isRequired,
+  singleData: PropTypes.func.isRequired,
+  htmlFor: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  control: PropTypes.object.isRequired,
+  errors: PropTypes.object,
 };
 
 export default SelectInputs

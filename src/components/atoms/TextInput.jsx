@@ -1,5 +1,6 @@
 import { Input } from '@mui/material';
 import { Controller } from 'react-hook-form';
+import PropTypes from 'prop-types';
 
 const TextInput = ({ name, id, control }) => (
   <div className="input-field">
@@ -10,5 +11,11 @@ const TextInput = ({ name, id, control }) => (
     />
   </div>
 );
+
+TextInput.propTypes = {
+  name: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  control: PropTypes.object.isRequired,
+};
 
 export default TextInput;

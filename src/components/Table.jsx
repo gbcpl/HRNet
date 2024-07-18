@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 function Table({ object }) {
   const columns = Object.keys(object[0]);
 
@@ -30,5 +32,11 @@ function Table({ object }) {
     </div>
   );
 }
+
+Table.propTypes = {
+  object: PropTypes.arrayOf(
+    PropTypes.objectOf(PropTypes.any)
+  ).isRequired
+};
 
 export default Table;

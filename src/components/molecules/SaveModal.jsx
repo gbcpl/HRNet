@@ -3,6 +3,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import Typography from '@mui/material/Typography';
+import PropTypes from "prop-types";
 
 function SaveModal({ open, onClose }) {
 
@@ -42,5 +43,10 @@ function SaveModal({ open, onClose }) {
     </Modal>
   )
 }
+
+SaveModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default SaveModal

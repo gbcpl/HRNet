@@ -5,7 +5,7 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 import { Controller } from 'react-hook-form';
 import { TextField } from '@mui/material';
 import Labels from '../atoms/Labels';
-
+import PropTypes from "prop-types";
 
 export default function Calendar({ name, control, id, htmlFor, title, errors }) {
   return (
@@ -38,3 +38,15 @@ export default function Calendar({ name, control, id, htmlFor, title, errors }) 
     </div>
   );
 }
+
+Calendar.propTypes = {
+  name: PropTypes.string.isRequired,
+  control: PropTypes.object.isRequired,
+  id: PropTypes.string.isRequired,
+  htmlFor: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  errors: PropTypes.oneOfType([
+    PropTypes.string,
+    PropTypes.bool,
+  ]),
+};
