@@ -21,7 +21,6 @@ function Form() {
   const [selectedState, setSelectedState] = useState("State");
   const [department, setDepartment] = useState("Department");
   const [openSaveModal, setOpenSaveModal] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
 
   const onSubmit = (data) => {
     const employee = {
@@ -37,7 +36,6 @@ function Form() {
     };
     saveEmployee(employee);
     setOpenSaveModal(true);
-    setErrorMessage('');
   };
 
   return (

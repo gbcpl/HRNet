@@ -42,7 +42,7 @@ export default function Calendar({ name, control, id, htmlFor, title, errors }) 
 Calendar.propTypes = {
   name: PropTypes.string.isRequired,
   control: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   htmlFor: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   errors: PropTypes.oneOfType([

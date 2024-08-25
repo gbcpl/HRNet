@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { DataTables } from '../../../../react-data-tables/lib/components/DataTables/DataTables.tsx';
+import { DataTables } from '@gbcpl/react-data-tables';
 import { useEmployeesContext } from "../../context/hooks.js";
 
 const columns = [
@@ -16,12 +16,14 @@ const columns = [
 
 function Employees() {
   const { employees } = useEmployeesContext();
-
+  console.log(employees)
   return (
     <div id="employee-div" className="container">
       <h1>Current Employees</h1>
-      <DataTables data={employees} rowsPerPage={5} columns={columns}/>
-      <Link to="/" relative="path">Home</Link>
+      <div className="table">
+        <DataTables data={employees} rowsPerPage={5} columns={columns}/>
+        <Link to="/" relative="path">Home</Link>
+      </div>
     </div>
   );
 }
